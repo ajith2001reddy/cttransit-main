@@ -1,0 +1,39 @@
+name: Flutter CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch: # Allows manual triggering from GitHub UI
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: ./cttransit-main
+
+      - name: Format code
+        run: flutter format --set-exit-if-changed .
+        working-directory: ./cttransit-main
+        continue-on-error: true
+
+      - name: Analyze project source
+        run: flutter analyze
+        working-directory: ./cttransit-main
+        continue-on-error: true
+
+      - name: Run tests
+        run: flutter test
+        working-directory: ./cttransit-main
+        continue-on-error: true
