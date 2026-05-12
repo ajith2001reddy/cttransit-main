@@ -34,7 +34,7 @@ jobs:
 
       - name: Build Web
         # The base-href must match your repository name for GitHub Pages to load assets correctly
-        run: flutter build web --base-href /cttransit-main/
+        run: flutter build web --web-renderer html --base-href /cttransit-main/
         working-directory: ./cttransit-main
 
       - name: Upload artifact
