@@ -113,19 +113,19 @@ class _TicketPageState extends State<TicketPage> with TickerProviderStateMixin {
   late final Animation<double> _innerAnim;
 
   // Timing (CSS-like)
-  static const int kOuterMs = 1000;
-  static const int kInnerMs = 780;
-  static const int kDelayMs = 510;
+  static const int kOuterMs = 4000;
+  static const int kInnerMs = 4000;
+  static const int kDelayMs = 400;
 
   // Scales (CSS-like, subtle; inner capped at 1.00)
-  static const double kOuterBegin = 0.92;
-  static const double kOuterEnd   = 1.17; // updated
-  static const double kInnerBegin = 0.90;
-  static const double kInnerEnd   = 1.00;
+  static const double kOuterBegin = 0.50;
+  static const double kOuterEnd   = 1.60;
+  static const double kInnerBegin = 0.50;
+  static const double kInnerEnd   = 1.40;
 
   // Colors
-  static const Color kOuterColor = Color(0xFFc21874);
-  static const Color kRingColor  = Color(0xFF9e0b78);
+  static const Color kOuterColor = Color(0xFFc8068a);
+  static const Color kRingColor  = Color(0xFF940079);
 
   @override
   void initState() {
@@ -135,17 +135,17 @@ class _TicketPageState extends State<TicketPage> with TickerProviderStateMixin {
     _outerCtrl = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: kOuterMs),
-    )..repeat(reverse: true);
-    _outerAnim = CurvedAnimation(parent: _outerCtrl, curve: Curves.easeInOut);
+    )..repeat(); // snaps back and repeats
+    _outerAnim = CurvedAnimation(parent: _outerCtrl, curve: Curves.easeOut);
 
     _innerCtrl = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: kInnerMs),
     );
     Future.delayed(const Duration(milliseconds: kDelayMs), () {
-      if (mounted) _innerCtrl.repeat(reverse: true);
+      if (mounted) _innerCtrl.repeat(); // snaps back and repeats
     });
-    _innerAnim = CurvedAnimation(parent: _innerCtrl, curve: Curves.easeInOut);
+    _innerAnim = CurvedAnimation(parent: _innerCtrl, curve: Curves.easeOut);
   }
 
   void _tickTime() {
