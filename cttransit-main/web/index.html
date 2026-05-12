@@ -63,6 +63,15 @@
     <div class="spinner"></div>
   </div>
   <script>
+    // Force unregister any old service workers to fix aggressive caching
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for(let registration of registrations) {
+          registration.unregister();
+        }
+      });
+    }
+
     window.addEventListener('load', function(ev) {
       _flutter.loader.load({
         onEntrypointLoaded: async function(engineInitializer) {
